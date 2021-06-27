@@ -1,6 +1,7 @@
 ﻿@using Umbraco.Cms.Web.Common.PublishedModels;
 @inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.NewsFeed>
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@using System.Web;
 @{
     Layout = "Master.cshtml";
 
@@ -11,7 +12,7 @@
     var newsFeed = Model.DescendantsOrSelfOfType("newsFeed").FirstOrDefault();
     var newsItems = newsFeed.Children;
 
-
+    var categories = new List<string>();
 
 }
 
@@ -22,8 +23,6 @@
     <partial name="@partialPath" model="@block" />
 
 }
-
-
 
 <section class="">
     <div class="container pt-5 pb-5">
