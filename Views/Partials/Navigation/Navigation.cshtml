@@ -1,0 +1,57 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{ 
+    Settings generalSettings = (Settings)Umbraco.ContentAtRoot().DescendantsOrSelfOfType("settings").FirstOrDefault();
+    var logo = generalSettings.Logo;
+
+    // Theme Settings
+    var background = generalSettings.MainMenuBackgroundColour?.ToString();
+    var mainMenuColour = generalSettings.MainMenuColour?.ToString();
+    var mainMenuHover = generalSettings.MainMenuHoverColour?.ToString();
+    var mainMenuColourStyle = string.Empty;
+
+    // Menu Settings
+    var mainMenu = generalSettings.MainMenu;
+    var pageUrl = Model.Url();
+}
+
+<style>
+    .navbar-bg {
+        background: @background;
+    }
+    #navbarNav .navbar-nav a.nav-link {
+        color: @mainMenuColour;
+    }
+        #navbarNav .navbar-nav li.nav-item a.active,
+        #navbarNav .navbar-nav a.nav-link:hover {
+            color: @mainMenuHover;
+        }
+</style>
+
+<nav class="navbar navbar-expand-lg navbar-light navbar-bg " >
+    <div class="container">
+        <a class="navbar-brand" href="/">
+            @if (logo != null)
+            {
+                <img src="@logo.MediaItem.Url()" height="80" alt="@logo.MediaItem.Name" class="ml-3" />
+            }
+            else
+            {
+                <img src="https://raw.githubusercontent.com/ManiPeralta/u_nine_6/main/Webready/logo.png" height="80" alt="Mano a mano logo" class="ml-3" />
+            }
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto text-primary">
+                @foreach (var item in mainMenu)
+                {
+                <li class="nav-item">
+                    <a class="nav-link @(item.Url == pageUrl ? "active" : "")" @(item.Url == pageUrl ? $"aria-current=page" : "") href="@item.Url">@item.Name</a>
+                </li>
+                }
+            </ul>
+        </div>
+    </div>
+</nav>

@@ -1,0 +1,66 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+
+@{
+    Settings generalSettings = (Settings)Umbraco.ContentAtRoot().DescendantsOrSelfOfType("settings").FirstOrDefault();
+
+    // Theme Settings
+    var footerBackground = generalSettings.FooterMenuBackgroundColour?.ToString();
+    var footerMenuColour = generalSettings.FooterMenuColour?.ToString();
+    var footerMenuHover = generalSettings.FooterMenuHoverColour?.ToString();
+    var footerMenuColourStyle = string.Empty;
+
+    // Menu Settings
+    var footerMenu = generalSettings.FooterMenu;
+    var pageUrl = Model.UrlSegment;
+
+    var socialMedia = generalSettings.SocialMedia;
+}
+
+<style>
+    .footer-bg {
+        background: @footerBackground;
+    }
+
+    .footer,
+    .footer a,
+    .footer .nav a.nav-link {
+        color: @footerMenuColour;
+    }
+        .footer .nav a.nav-link:hover {
+            color: @footerMenuHover;
+        }
+</style>
+
+<section class="footer footer-bg">
+    <div class="container">
+        <div class="row py-3">
+            <div class="col-md-7">
+                <ul class="nav">
+                    @if (footerMenu != null)
+                    {
+                        foreach (var nav in footerMenu)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-white" href="@nav.Url">@nav.Name</a>
+                            </li>
+                        }
+                    }
+                    @if (socialMedia != null)
+                    {
+                        foreach (var social in socialMedia)
+                        {
+                            <li class="nav-item">
+                                <a href="@social.SocialMediaUrl" class="nav-link" target="_blank">
+                                    <i class="bi bi-@social.SocialMediaName  "></i>
+                                </a>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+            <div class="col-md text-md-right">
+                <small>&copy; @(DateTime.Now.Year)  <a href="http://manoamano.co.uk">Mano a mano</a></small>
+            </div>
+        </div>
+    </div>
+</section>

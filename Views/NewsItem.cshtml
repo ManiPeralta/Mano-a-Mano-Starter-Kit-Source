@@ -1,0 +1,56 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.NewsItem>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+
+    Settings generalSettings = (Settings)Umbraco.ContentAtRoot().DescendantsOrSelfOfType("settings").FirstOrDefault();
+
+    var fotoOrigen = ""; //generalSettings.URlbase;
+    var fotoTemporral = "cactus.jpg";
+
+    //var siteUrl = Request.Url.GetLeftPart(UriPartial.Authority);
+    var thumbnail = Model.MainPicture != null ? Model.MainPicture.GetLocalCropUrl("Thumbnail") : !string.IsNullOrWhiteSpace(fotoOrigen) ? $"{fotoOrigen}{fotoTemporral}" : null;
+    var mainPicture = Model.MainPicture != null ? Model.MainPicture.GetLocalCropUrl("Medium") : !string.IsNullOrWhiteSpace(fotoOrigen) ? $"{fotoOrigen}{fotoTemporral}" : null;
+}
+
+<section class="mp">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 pt-3">
+                <h1>@Model.Title</h1>
+                <p>By @Model.Author</p>
+            </div>
+            <div class="col-md-12">
+                <p>@Model.PublishedDated.ToString("d MMM yyyy") | @string.Join(",", Model.Categories)</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="mp">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 pl-0">
+                @if (mainPicture != null)
+                {
+                    <div class="mb-4 pl-3 pr-3"><img class="w-100" src="@mainPicture" alt="Alternate Text" /> </div>
+                }
+
+                @Html.GetGridHtml(Model, "textContent")
+            </div>
+            @*<div class="col-md-4">
+                @if (Model.Relacionados != null && Model.Relacionados.Count > 0)
+                {
+                    <h3>Relacionados</h3>
+                    foreach (var block in Model.Relacionados)
+                    {
+                        @Html.Partial($"Bloques/{block.Content.ContentType.Alias}", block)
+                    }
+                }
+            </div>*@
+        </div>
+    </div>
+</section>

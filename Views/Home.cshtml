@@ -1,0 +1,12 @@
+﻿@using Umbraco.Cms.Web.Common.PublishedModels;
+@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<ContentModels.Home>
+@using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
+@{
+    Layout = "Master.cshtml";
+}
+
+@foreach (var block in Model.MainContent)
+{
+    var partialPath = $"BlockListModules/{block.Content.ContentType.Alias}";
+    <partial name="@partialPath" model="@block" />
+}

@@ -1,0 +1,44 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<RelatedContent, RelatedContentSettings>>
+@{
+    // Settings data
+    var settings = Model.Settings;
+    var style = settings.BackgroundColour;
+
+    // Content data
+    var relatedContent = Model.Content;
+
+}
+
+@if (relatedContent != null)
+{
+    <section class="related">
+        <div class="container pb-5">
+            <div class="row">
+                @foreach (var item in relatedContent.RelatedPages)
+                {
+                    TextPage related = (TextPage)item;
+                    var name = related.Name;
+                    var abstractText = related.Summary;
+                    var image = related.Thumbnail;
+                    var link = related.Url();
+                    <div class="col-md-4 bg-light p-4">
+                        <div class="pb-3 thumbnail-holder">
+                            <a href="@link">
+                                @if (image != null)
+                                {
+                                    <img src="@image.MediaItem.GetCropUrl("Thumbnail")" alt="" />
+                                }
+                            </a>
+                        </div>
+                        <div>
+                            <h4 class="fst-italic"><a href="@link">@name</a></h4>
+                            <p class="mb-0">@abstractText</p>
+                        </div>
+                    </div>
+                }
+            </div>
+
+        </div>
+    </section>
+
+}

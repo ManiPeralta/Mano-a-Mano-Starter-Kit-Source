@@ -1,0 +1,60 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<Split, SplitSettings>>
+
+@{
+    // Settings data
+    var settings = Model.Settings;
+    var reverseOrder = settings.ReverseOrder;
+    var style = settings.BackgroundColour;
+
+    // content data
+    var imageModule = Model.Content.Photo;
+    string image = string.Empty;
+    string imageTitle = string.Empty;
+    foreach (var item in imageModule)
+    {
+        SplitPhoto splitPhoto = (SplitPhoto)item.Content;
+        imageTitle = splitPhoto.Title;
+        image = splitPhoto.Photo != null ? splitPhoto.Photo.GetLocalCropUrl("Medium") : "https://ichef.bbci.co.uk/news/800/cpsprodpb/30E1/production/_118831521_gettyimages-124129821.jpg";
+    }
+
+    var textModule = Model.Content.Text;
+    var textTitle = string.Empty;
+    var textSubtitle = string.Empty;
+    var textContent = string.Empty;
+    var textLink = string.Empty;
+    foreach (var item in textModule)
+    {
+        SplitText splitText = (SplitText)item.Content;
+        textTitle = splitText.Title;
+        textSubtitle = splitText.Subtitle;
+        textContent = splitText.Text.ToString();
+        textLink = splitText.Link != null ? splitText.Link.Url.ToString() : "";
+    }
+}
+
+<section id="learn" class="pt-5 pb-5 @(style != null ? $"mam{style}" : "")">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="col-md  @(reverseOrder ? "order-md-2" : "") ">
+                @if (!string.IsNullOrEmpty(image))
+                {
+                    <img src="@image" class="img-fluid" alt="@imageTitle">
+                }
+            </div>
+            <div class="col-md pt-5 pb-5">
+                <h2>@textTitle</h2>
+                <p class="lead">
+                    @textSubtitle
+                </p>
+                @Html.Raw(textContent)
+                @if (!string.IsNullOrEmpty(textLink))
+                {
+                    <a href="@textLink" class="btn btn-light mt-3">
+                        <i class="bi bi-chevron-right"></i> Read More
+                    </a>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>

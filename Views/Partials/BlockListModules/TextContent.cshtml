@@ -1,0 +1,26 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<TextContent, TextContentSettings>>
+
+@{
+    // Settings data
+    var settings = Model.Settings;
+    var style = settings.BackgroundColour;
+
+    // Content data
+    var title = !string.IsNullOrEmpty(Model.Content.Title) ? Model.Content.Title : "";
+    var subtitle = !string.IsNullOrEmpty(Model.Content.Subtitle) ? Model.Content.Subtitle : "";
+    var text = Model.Content.Text;
+}
+
+<section class="pt-5 pb-4 @(style != null ? $"mam{style}" : "")">
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <h2>@title</h2>
+                <p class="lead">
+                    @subtitle
+                </p>
+                @Html.Raw(text)
+            </div>
+        </div>
+    </div>
+</section>
