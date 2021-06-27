@@ -1,0 +1,46 @@
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<RelatedNews, RelatedNewsSettings>>
+
+@{
+    Settings generalSettings = (Settings)Umbraco.ContentAtRoot().DescendantsOrSelfOfType("settings").FirstOrDefault();
+    var fotoOrigen = generalSettings.BaseUrl;
+    var fotoTemporral = "salar-seco.jpg";
+
+    // Settings data
+    var settings = Model.Settings;
+    var style = settings.BackgroundColour;
+
+    // Content data
+    var content = Model.Content;
+    var relatedNews = content.RelatedNewsItem;
+    var relatedNewsAny = relatedNews.Any();
+
+    if (relatedNews != null && relatedNewsAny)
+    {
+        <div class=" ">
+
+            @foreach (var item in relatedNews)
+            {
+                NewsItem relatedItems = (NewsItem)item;
+                if (relatedItems != null && !string.IsNullOrEmpty(relatedItems.Title))
+                {
+                    var fotoRelacionada = relatedItems.Thumbnail != null ? relatedItems.Thumbnail.GetLocalCropUrl("Thumbnail") : !string.IsNullOrWhiteSpace(fotoOrigen) ? $"{fotoOrigen}{fotoTemporral}" : null;
+                    <div class=" mb-4">
+                        <div class="card mb-12 box-shadow">
+                            <img class="card-img-top" alt="" style="height: 225px; width: 100%; display: block;" src="@fotoRelacionada" data-holder-rendered="true">
+                            <div class="card-body ">
+                                <h4 class="display-5"><a class="text-dark" href="@relatedItems.Url()"> @relatedItems.Title</a></h4>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <p>@relatedItems.Slogan</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+
+        </div>
+    }
+}
