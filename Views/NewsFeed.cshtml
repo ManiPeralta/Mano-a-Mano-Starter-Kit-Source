@@ -3,7 +3,18 @@
 @using ContentModels = Umbraco.Cms.Web.Common.PublishedModels;
 @{
     Layout = "Master.cshtml";
+
+    Settings generalSettings = (Settings)Umbraco.ContentAtRoot().DescendantsOrSelfOfType("settings").FirstOrDefault();
+    var baseUrl = generalSettings.BaseUrl;
+    var tempImage = "salar-seco.jpg";
+
+    var newsFeed = Model.DescendantsOrSelfOfType("newsFeed").FirstOrDefault();
+    var newsItems = newsFeed.Children;
+
+
+
 }
+
 
 @foreach (var block in Model.MainContent)
 {
@@ -11,3 +22,36 @@
     <partial name="@partialPath" model="@block" />
 
 }
+
+
+
+<section class="">
+    <div class="container pt-5 pb-5">
+        <div class="row p-2">
+            <div class="col-md-8">
+                <div class="row">
+                    @foreach (var item in newsItems)
+                    {
+                        NewsItem newsItem = (NewsItem)item;
+                        var thumbnail = newsItem.Thumbnail != null ? newsItem.Thumbnail.GetLocalCropUrl("Thumbnail") : !string.IsNullOrWhiteSpace(baseUrl) ? $"{baseUrl}{tempImage}" : "";
+                        <div class="col-md-2 mb-2  bg-light">
+                            <a href="@newsItem.Url()" class="text-dark"><img class="card-img-top" alt="Thumbnail" style="height: 100px; width: 100%; display: block;" src="@thumbnail" data-holder-rendered="true"></a>
+                        </div>
+                        <div class="col-md-10 mb-2  bg-light">
+                            <div class="card-body">
+                                <h3><a href="@newsItem.Url()" class="text-dark">@newsItem.Name</a></h3>
+                                <p class="card-text">@newsItem.Slogan</p>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="row">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
