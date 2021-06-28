@@ -5,26 +5,50 @@
     var settings = Model.Settings;
     var style = settings.BackgroundColour;
 
+    var baseUrl = ""; // "https://raw.githubusercontent.com/ManiPeralta/u_nine_6/main/Webready/";
+    var imageName = "isla-del-sol.jpg";
     // Content data
     var title = !string.IsNullOrEmpty(Model.Content.Title) ? Model.Content.Title : "";
     var subtitle = !string.IsNullOrEmpty(Model.Content.Subtitle) ? Model.Content.Subtitle : "";
     var links = Model.Content.Links;
     var backroundPhoto = Model.Content.BackgroundImage;
     var photo = Model.Content.Photo;
+    var backgroundPhotoUrl = string.Empty; if (backroundPhoto != null)
+    {
+        backgroundPhotoUrl = backroundPhoto.GetLocalCropUrl("Banner").ToString();
+    }
+    else if (!string.IsNullOrWhiteSpace(baseUrl))
+    {
+        backgroundPhotoUrl = $"{baseUrl}{imageName}";
+    }
+    else
+    {
+        backgroundPhotoUrl = "";
+    }
+
+    // Colour Settings
+    var BackgroundColour = $"#{settings.BackgroundColour}";
+    var textColour = $"#{settings.TextContentColour}";
+    var titleColour = $"#{settings.TitleColour}";
 }
 
 <style>
     .overlay {
         background-color: rgba(0, 0, 0, 0.4);
     }
+    .heading p {
+        color: @textColour;
+    }
+    .heading h1{
+        color: @titleColour;
+    }
 </style>
 
-<section class="text-light" style="background-image: url(@(backroundPhoto != null ? backroundPhoto.GetLocalCropUrl("Banner") : "https://raw.githubusercontent.com/ManiPeralta/u_nine_6/main/Webready/isla-del-sol.jpg")); background-position:center; background-size:cover;">
+<section class="text-light heading" style="background: @BackgroundColour url(@backgroundPhotoUrl); background-position: center; background-size: cover;">
     <div class=" overlay">
         <div class="container py-5">
             <div class="d-sm-flex align-items-center justify-content-between pt-lg-5 pb-lg-5">
                 <div class="p-5">
-                    @*<h1>Become a <span class="text-warning"> Web Developer</span></h1>*@
                     <h1 class="display-4 fw-normal">@title</h1>
                     <p class="lead fw-normal">
                         @subtitle
