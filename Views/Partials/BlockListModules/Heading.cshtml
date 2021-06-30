@@ -1,9 +1,6 @@
 ﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<Heading, HeadingSettings>>
 
 @{
-    // Settings data
-    var settings = Model.Settings;
-    var style = settings.BackgroundColour;
 
     var baseUrl = ""; // "https://raw.githubusercontent.com/ManiPeralta/u_nine_6/main/Webready/";
     var imageName = "isla-del-sol.jpg";
@@ -25,51 +22,70 @@
     {
         backgroundPhotoUrl = "";
     }
-
-    // Colour Settings
-    var BackgroundColour = $"#{settings.BackgroundColour}";
-    var textColour = $"#{settings.TextContentColour}";
-    var titleColour = $"#{settings.TitleColour}";
 }
 
+
+@{ 
+    // Settings data
+    var settings = Model.Settings;
+    var style = settings.BackgroundColour;
+
+
+    // Colour Settings
+    var moduleId = $"id{settings.ContentType.Id}";
+    var BackgroundColour = $"#{settings.BackgroundColour}";
+    var titleColour = $"#{settings.TitleColour}";
+    var subtitleColour = $"#{settings.SubtitleTextColour}";
+    //string partialPath = "Theme/Style";
+}
 <style>
     .overlay {
         background-color: rgba(0, 0, 0, 0.4);
     }
-    .heading p {
-        color: @textColour;
-    }
-    .heading h1{
+   #@moduleId h3{
         color: @titleColour;
     }
+    #@moduleId
+    .module-bg {
+        background-color: @BackgroundColour;
+    }
+    #@moduleId h4 a {
+        color: @subtitleColour;
+    }
+
 </style>
 
-<section class="text-light heading" style="background: @BackgroundColour url(@backgroundPhotoUrl); background-position: center; background-size: cover;">
-    <div class=" overlay">
-        <div class="container py-5">
-            <div class="d-sm-flex align-items-center justify-content-between pt-lg-5 pb-lg-5">
-                <div class="p-5">
-                    <h1 class="display-4 fw-normal">@title</h1>
-                    <p class="lead fw-normal">
-                        @subtitle
-                    </p>
-                    @if (links != null)
-                    {
-                        var counter = 0;
-                        foreach (var link in links)
+@*<partial name="Test" model="@Model" />*@
+
+<section  id="@moduleId" class="text-light heading" style="background: @BackgroundColour url(@backgroundPhotoUrl); background-position: center; background-size: cover;">
+    <div class="module-bg">
+        <div class=" overlay">
+            <div class="container py-5">
+                <div class="d-sm-flex align-items-center justify-content-between pt-lg-5 pb-lg-5">
+                    <div class="p-5">
+                        <h1 class="display-4 fw-normal">@title</h1>
+                        <p class="lead fw-normal">
+                            @subtitle
+                        </p>
+                        @if (links != null)
                         {
-                            <button class="btn btn-@(counter == 0 ? "primary" : "secondary") my-2" data-bs-toggle="modal" data-bs-target="@link.Url">@link.Name</button>
-                            counter++;
+                            var counter = 0;
+                            foreach (var link in links)
+                            {
+                                <button class="btn btn-@(counter == 0 ? "primary" : "secondary") my-2" data-bs-toggle="modal" data-bs-target="@link.Url">@link.Name</button>
+                                counter++;
+                            }
                         }
+                    </div>
+                    @if (photo != null)
+                    {
+                        <img class="img-fluid w-50 d-none d-sm-block" src="@photo.MediaItem.Url()" alt="" />
                     }
                 </div>
-                @if (photo != null)
-                {
-                    <img class="img-fluid w-50 d-none d-sm-block" src="@photo.MediaItem.Url()" alt="" />
-                }
             </div>
         </div>
     </div>
+  
 
 </section>
 

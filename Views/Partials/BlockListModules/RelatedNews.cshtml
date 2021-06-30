@@ -5,18 +5,50 @@
     var fotoOrigen = generalSettings.BaseUrl;
     var fotoTemporral = "salar-seco.jpg";
 
-    // Settings data
-    var settings = Model.Settings;
-    var style = settings.BackgroundColour;
-
     // Content data
     var content = Model.Content;
     var relatedNews = content.RelatedNewsItem;
     var relatedNewsAny = relatedNews.Any();
+}
 
-    if (relatedNews != null && relatedNewsAny)
-    {
-        <div class=" ">
+@{
+    // Settings data
+    var settings = Model.Settings;
+
+    // Colour Settings
+    var moduleId = $"id{settings.ContentType.Id}";
+    var BackgroundColour = $"#{settings.BackgroundColour}";
+    var titleColour = $"#{settings.TitleColour}";
+    var subtitleColour = $"#{settings.SubtitleTextColour}";
+    var textColour = $"#{settings.TextContentColour}";
+    //string partialPath = "Theme/Style";
+}
+
+<style>
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    #@moduleId h3{
+        color: @titleColour;
+    }
+    #@moduleId
+    .module-bg {
+        background-color: @BackgroundColour;
+    }
+    #@moduleId h4 a {
+        color: @subtitleColour;
+    }
+    #@moduleId p {
+        color: @textColour;
+    }
+</style>
+
+
+
+@if (relatedNews != null && relatedNewsAny)
+{
+    <section id="@moduleId" class="related">
+        <div class="module-bg">
 
             @foreach (var item in relatedNews)
             {
@@ -42,5 +74,5 @@
             }
 
         </div>
-    }
+    </section>
 }

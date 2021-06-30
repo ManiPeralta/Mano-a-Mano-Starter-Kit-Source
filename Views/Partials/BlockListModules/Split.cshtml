@@ -1,11 +1,6 @@
 ﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<Split, SplitSettings>>
 
 @{
-    // Settings data
-    var settings = Model.Settings;
-    var reverseOrder = settings.ReverseOrder;
-    var style = settings.BackgroundColour;
-
     // content data
     var imageModule = Model.Content.Photo;
     string image = string.Empty;
@@ -31,30 +26,66 @@
         textLink = splitText.Link != null ? splitText.Link.Url.ToString() : "";
     }
 }
+@{
+    // Settings data
+    var settings = Model.Settings;
+    var reverseOrder = settings.ReverseOrder;
 
-<section id="learn" class="pt-5 pb-5 @(style != null ? $"mam{style}" : "")">
-    <div class="container">
-        <div class="row align-items-center justify-content-between">
-            <div class="col-md  @(reverseOrder ? "order-md-2" : "") ">
-                @if (!string.IsNullOrEmpty(image))
-                {
-                    <img src="@image" class="img-fluid" alt="@imageTitle">
-                }
-            </div>
-            <div class="col-md pt-5 pb-5">
-                <h2>@textTitle</h2>
-                <p class="lead">
-                    @textSubtitle
-                </p>
-                @Html.Raw(textContent)
-                @if (!string.IsNullOrEmpty(textLink))
-                {
-                    <a href="@textLink" class="btn btn-light mt-3">
-                        <i class="bi bi-chevron-right"></i> Read More
-                    </a>
-                }
+    // Colour Settings
+    var individualId = settings.Key;
+    var moduleId = $"id{settings.Key}";
+    var BackgroundColour = $"#{settings.BackgroundColour}";
+    var titleColour = $"#{settings.TitleColour}";
+    var subtitleColour = $"#{settings.SubtitleTextColour}";
+    var textColour = $"#{settings.TextContentColour}";
+    //string partialPath = "Theme/Style";
+}
 
+@individualId
+<style>
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    #@moduleId
+    .module-bg {
+        background-color: @BackgroundColour;
+    }
+    #@moduleId h2{
+        color: @titleColour;
+    }
+    #@moduleId h4 p.lead {
+        color: @subtitleColour;
+    }
+    #@moduleId p {
+        color: @textColour;
+    }
+</style>
+<section id="@moduleId" class="">
+    <div class="module-bg pt-5 pb-5 ">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md  @(reverseOrder ? "order-md-2" : "") ">
+                    @if (!string.IsNullOrEmpty(image))
+                    {
+                        <img src="@image" class="img-fluid" alt="@imageTitle">
+                    }
+                </div>
+                <div class="col-md pt-5 pb-5">
+                    <h2>@textTitle</h2>
+                    <p class="lead">
+                        @textSubtitle
+                    </p>
+                    @Html.Raw(textContent)
+                    @if (!string.IsNullOrEmpty(textLink))
+                    {
+                        <a href="@textLink" class="btn btn-light mt-3">
+                            <i class="bi bi-chevron-right"></i> Read More
+                        </a>
+                    }
+
+                </div>
             </div>
         </div>
     </div>
+   
 </section>

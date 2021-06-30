@@ -1,11 +1,6 @@
 ﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<Slider, SliderSettings>>
 
 @{
-    // Settings data
-    var settings = Model.Settings;
-    var style = settings.BackgroundColour;
-    bool overlay = settings.Overlay; ;
-
     // Content data
     var slides = Model.Content.Slides;
     var counter = 0;
@@ -17,58 +12,93 @@
 
     string githubPath = "https://raw.githubusercontent.com/ManiPeralta/u_nine_6/main/Webready/";
 }
+
+@{
+    // Settings data
+    var settings = Model.Settings;
+    bool overlay = settings.Overlay; ;
+
+    // Colour Settings
+    var moduleId = $"id{settings.ContentType.Id}";
+    var BackgroundColour = $"#{settings.BackgroundColour}";
+    var titleColour = $"#{settings.TitleColour}";
+    var subtitleColour = $"#{settings.SubtitleTextColour}";
+    var textColour = $"#{settings.TextContentColour}";
+    //string partialPath = "Theme/Style";
+}
+
 <style>
     .overlay {
         background-color: rgba(0, 0, 0, 0.4);
     }
+    #@moduleId
+    .module-bg {
+        background-color: @BackgroundColour;
+    }
+    #@moduleId h3{
+        color: @titleColour;
+    }
+    #@moduleId h2 {
+        color: @subtitleColour;
+    }
+    #@moduleId p {
+        color: @textColour;
+    }
 </style>
-<!-- carousel -->
-<div id="carouselExampleIndicators" class="carousel slide @(style != null ? $"mam{style}" :"") custom_overlay" data-ride="carousel">
-    <ol class="carousel-indicators">
-        @if (slides != null)
-        {
-            int innerCount = 0;
-            foreach (var item in slides)
-            {
-                <li data-target="#carouselExampleIndicators" data-slide-to="@innerCount" class="@(counter == 0 ? "class=\"active\"" : "")"></li>
-                innerCount++;
-            }
-        }
-    </ol>
-    <div class="carousel-inner">
-        @foreach (var item in slides)
-        {
-            Slide slide = (Slide)item.Content;
-            photo = slide.Photo != null && slide.Photo.MediaItem.Url().Any() ? slide.Photo.GetLocalCropUrl("Banner") : $"{githubPath}salar{counter + 1}.jpg";
-            title = slide.Title;
-            subTitle = slide.Subtitle;
-            var button = slide.Link != null ? slide.Link : null;
-            <div class="carousel-item  @(counter == 0 ? "active" : "")">
-                <img src="@photo" class="d-block w-100" alt="">
-                <div class="container ">
-                    <div class="carousel-caption @(overlay ? "custom_overlay" : "") text-start p-3">
-                        <h2>@title</h2>
-                        <p>@subTitle</p>
-                        @if (button != null)
-                        {
-                            buttonUrl = button.Url;
-                            buttonName = button.Name;
-                            <p><a class="btn btn-lg btn-primary" href="@buttonUrl">@buttonName</a></p>
-                        }
 
+
+<!-- carousel -->
+<section id="@moduleId">
+    <div class="module-bg">
+        <div id="carouselExampleIndicators" class="carousel slide custom_overlay" data-ride="carousel">
+            <ol class="carousel-indicators">
+                @if (slides != null)
+                {
+                    int innerCount = 0;
+                    foreach (var item in slides)
+                    {
+                        <li data-target="#carouselExampleIndicators" data-slide-to="@innerCount" class="@(counter == 0 ? "class=\"active\"" : "")"></li>
+                        innerCount++;
+                    }
+                }
+            </ol>
+            <div class="carousel-inner">
+                @foreach (var item in slides)
+                {
+                    Slide slide = (Slide)item.Content;
+                    photo = slide.Photo != null && slide.Photo.MediaItem.Url().Any() ? slide.Photo.GetLocalCropUrl("Banner") : $"{githubPath}salar{counter + 1}.jpg";
+                    title = slide.Title;
+                    subTitle = slide.Subtitle;
+                    var button = slide.Link != null ? slide.Link : null;
+                    <div class="carousel-item  @(counter == 0 ? "active" : "")">
+                        <img src="@photo" class="d-block w-100" alt="">
+                        <div class="container ">
+                            <div class="carousel-caption @(overlay ? "custom_overlay" : "") text-start p-3">
+                                <h2>@title</h2>
+                                <p>@subTitle</p>
+                                @if (button != null)
+                                {
+                                    buttonUrl = button.Url;
+                                    buttonName = button.Name;
+                                    <p><a class="btn btn-lg btn-primary" href="@buttonUrl">@buttonName</a></p>
+                                }
+
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    counter++;
+                }
             </div>
-            counter++;
-        }
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
     </div>
-    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+</section>
+
 <!-- /carousel -->

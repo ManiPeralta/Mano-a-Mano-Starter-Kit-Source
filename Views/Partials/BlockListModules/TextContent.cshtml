@@ -1,26 +1,56 @@
 ﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<TextContent, TextContentSettings>>
 
 @{
-    // Settings data
-    var settings = Model.Settings;
-    var style = settings.BackgroundColour;
-
     // Content data
     var title = !string.IsNullOrEmpty(Model.Content.Title) ? Model.Content.Title : "";
     var subtitle = !string.IsNullOrEmpty(Model.Content.Subtitle) ? Model.Content.Subtitle : "";
     var text = Model.Content.Text;
 }
+@{
+    // Settings data
+    var settings = Model.Settings;
 
-<section class="pt-5 pb-4 @(style != null ? $"mam{style}" : "")">
-    <div class="container">
-        <div class="row">
-            <div class="col-md">
-                <h2>@title</h2>
-                <p class="lead">
-                    @subtitle
-                </p>
-                @Html.Raw(text)
+    // Colour Settings
+    var moduleId = $"id{settings.ContentType.Id}";
+    var BackgroundColour = $"#{settings.BackgroundColour}";
+    var titleColour = $"#{settings.TitleColour}";
+    var subtitleColour = $"#{settings.SubtitleTextColour}";
+    var textColour = $"#{settings.TextContentColour}";
+    //string partialPath = "Theme/Style";
+}
+
+<style>
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    #@moduleId h3{
+        color: @titleColour;
+    }
+    #@moduleId
+    .module-bg {
+        background-color: @BackgroundColour;
+    }
+    #@moduleId h4 a {
+        color: @subtitleColour;
+    }
+    #@moduleId p {
+        color: @textColour;
+    }
+</style>
+
+<section id="@moduleId" class="pt-5 pb-4 ">
+    <div class="module-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md">
+                    <h2>@title</h2>
+                    <p class="lead">
+                        @subtitle
+                    </p>
+                    @Html.Raw(text)
+                </div>
             </div>
         </div>
     </div>
+    
 </section>
