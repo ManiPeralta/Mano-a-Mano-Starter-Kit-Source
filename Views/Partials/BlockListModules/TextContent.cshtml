@@ -11,7 +11,7 @@
     var settings = Model.Settings;
 
     // Colour Settings
-    var moduleId = $"id{settings.ContentType.Id}";
+    var moduleId = $"id{settings.Key}";
     var BackgroundColour = $"#{settings.BackgroundColour}";
     var titleColour = $"#{settings.TitleColour}";
     var subtitleColour = $"#{settings.SubtitleTextColour}";
@@ -38,8 +38,8 @@
     }
 </style>
 
-<section id="@moduleId" class="pt-5 pb-4 ">
-    <div class="module-bg">
+<section id="@moduleId" class="">
+    <div class="module-bg pt-4 pb-4 ">
         <div class="container">
             <div class="row">
                 <div class="col-md">
