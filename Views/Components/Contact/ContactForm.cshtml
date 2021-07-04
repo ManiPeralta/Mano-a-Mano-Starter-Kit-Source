@@ -1,0 +1,10 @@
+﻿@model B4.Models.ContactModel
+@using B4.Controllers
+
+@using (Html.BeginUmbracoForm<ContactFormController>("HandleContactForm"))
+{
+    <div class="form-group">
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+}

@@ -24,7 +24,7 @@
     }
 }
 
-@{ 
+@{
     // Settings data
     var settings = Model.Settings;
     var style = settings.BackgroundColour;
@@ -52,9 +52,15 @@
 
 </style>
 
-@*<partial name="Test" model="@Model" />*@
+@*
+    Current questions
+    how to pass this functionality to a partial view, incliuding passing the Model?
+    how to render the Controller in the contact form context
+    <partial name="Test" model="settings" />
+*@
 
-<section  id="@moduleId" class="" >
+
+<section id="@moduleId" class="">
     <div class="module-bg" style="background: url(@backgroundPhotoUrl); background-position: center; background-size: cover;">
         <div class=" overlay">
             <div class="container py-5">

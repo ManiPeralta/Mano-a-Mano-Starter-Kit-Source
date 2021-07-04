@@ -1,1 +1,65 @@
-﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
+﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<ContactForm, ContactFormSettings>>
+
+
+@{
+    // Content data
+    var content = Model.Content;
+    var title = !string.IsNullOrEmpty(Model.Content.Title) ? Model.Content.Title : "";
+    var subtitle = !string.IsNullOrEmpty(Model.Content.Subtitle) ? Model.Content.Subtitle : "";
+    //var text = Model.Content.Text;
+}
+@{
+    // Settings data
+    var settings = Model.Settings;
+
+    // Colour Settings
+    var moduleId = $"id{settings.Key}";
+    var BackgroundColour = $"#{settings.BackgroundColour}";
+    var titleColour = $"#{settings.TitleColour}";
+    var subtitleColour = $"#{settings.SubtitleTextColour}";
+    var textColour = $"#{settings.SubtitleTextColour}";
+    //string partialPath = "Theme/Style";
+}
+
+<style>
+    .overlay {
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+    #@moduleId h3{
+        color: @titleColour;
+    }
+    #@moduleId
+    .module-bg {
+        background-color: @BackgroundColour;
+    }
+    #@moduleId h4 a {
+        color: @subtitleColour;
+    }
+    #@moduleId p {
+        color: @textColour;
+    }
+</style>
+
+<section id="@moduleId" class="">
+    <div class="module-bg pt-4 pb-4 ">
+        <div class="container">
+            <div class="row">
+                <div class="col-md">
+                    <h2>@title</h2>
+                    <p class="lead">
+                        @subtitle
+                    </p>
+
+                    @(await Component.InvokeAsync("ContactForm", content))
+
+                    <partial asp-controller="ContactForm" asp-action="RenderContactForm">test</partial>
+                    @*@{
+                        @Html.a ("RenderContactForm", "ContactForm")
+                    }*@
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
