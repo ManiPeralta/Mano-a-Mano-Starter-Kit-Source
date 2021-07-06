@@ -65,7 +65,7 @@
                 <div class="col-md  @(reverseOrder ? "order-md-2" : "") ">
                     @if (!string.IsNullOrEmpty(image))
                     {
-                        <img src="@image" class="img-fluid" alt="@imageTitle">
+                        <img src="@image" class="img-fluid" alt="@imageTitle" asp-append-version="true">
                     }
                 </div>
                 <div class="col-md pt-5 pb-5">

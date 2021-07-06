@@ -15,7 +15,6 @@
     var titleColour = $"#{settings.TitleColour}";
     var subtitleColour = $"#{settings.SubtitleTextColour}";
     var textColour = $"#{settings.TextContentColour}";
-    //string partialPath = "Theme/Style";
 }
 
 <style>
@@ -55,7 +54,7 @@
                                 <a href="@link">
                                     @if (image != null)
                                     {
-                                        <img src="@image.MediaItem.GetCropUrl("Thumbnail")" alt="" />
+                                        <img src="@image.MediaItem.GetCropUrl("Thumbnail")" alt="@image.MediaItem.Name" asp-append-version="true" />
                                     }
                                 </a>
                             </div>

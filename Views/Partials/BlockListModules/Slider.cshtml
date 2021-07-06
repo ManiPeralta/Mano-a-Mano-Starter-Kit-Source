@@ -71,7 +71,7 @@
                     subTitle = slide.Subtitle;
                     var button = slide.Link != null ? slide.Link : null;
                     <div class="carousel-item  @(counter == 0 ? "active" : "")">
-                        <img src="@photo" class="d-block w-100" alt="">
+                        <img src="@photo" class="d-block w-100" alt="@title" asp-append-version="true">
                         <div class="container ">
                             <div class="carousel-caption @(overlay ? "custom_overlay" : "") text-start p-3">
                                 <h2>@title</h2>

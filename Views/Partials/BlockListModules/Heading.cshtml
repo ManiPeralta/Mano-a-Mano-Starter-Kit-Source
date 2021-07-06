@@ -82,7 +82,7 @@
                     </div>
                     @if (photo != null)
                     {
-                        <img class="img-fluid w-50 d-none d-sm-block" src="@photo.MediaItem.Url()" alt="" />
+                        <img class="img-fluid w-50 d-none d-sm-block" src="@photo.MediaItem.Url()" alt="@photo.MediaItem.Name" asp-append-version="true" />
                     }
                 </div>
             </div>
