@@ -33,5 +33,12 @@ namespace B4.Controllers
             ContactModel model = new ContactModel();
             return PartialView(PATH, model);
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult HandleContactForm(ContactModel model)
+        {
+            return null;
+        }
     }
 }

@@ -1,5 +1,5 @@
 ﻿@inherits UmbracoViewPage<Umbraco.Cms.Core.Models.Blocks.BlockListItem<ContactForm, ContactFormSettings>>
-
+@using Umbraco.Cms.Web.Website
 
 @{
     // Content data
@@ -52,10 +52,12 @@
 
                     @*@(await Component.InvokeAsync("ContactForm", content))*@
 
-                    <partial asp-controller="ContactForm" asp-action="RenderContactForm">test</partial>
-                    @*@{
-                        @Html.a ("RenderContactForm", "ContactForm")
-                    }*@
+                    @*<partial asp-controller="ContactForm" asp-action="RenderContactForm">test</partial>*@
+
+                    @*@Html.RenderPartial("ContactForm", new ContactForm())*@
+                    https://www.mathiashove.com/blog/using-view-components-in-umbraco-9/
+
+                    https://www.formfakten.de/blog/software-labor/2020/04/view-components-in-umbraco
 
                 </div>
             </div>
