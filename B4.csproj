@@ -68,5 +68,11 @@
     <!-- Set this to true if ModelsBuilder mode is not InMemoryAuto-->
     <PropertyGroup>
         <RazorCompileOnBuild>false</RazorCompileOnBuild>
+        <PackageId>Mano a mano Starter Kit</PackageId>
+        <Authors>Mani</Authors>
+        <Product>Mano a mano Starter Kit</Product>
+        <Description>Umbraco 9 Mano a mano Starter Kit</Description>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RepositoryUrl>https://github.com/ManiPeralta/Mano-a-Mano-Starter-Kit-Source</RepositoryUrl>
     </PropertyGroup>
 </Project>
