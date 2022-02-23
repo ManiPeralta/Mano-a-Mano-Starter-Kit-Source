@@ -1,13 +1,13 @@
 ﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage
 
-@{ 
+@{
     Settings generalSettings = (Settings)Umbraco.ContentAtRoot().DescendantsOrSelfOfType("settings").FirstOrDefault();
     var logo = generalSettings.Logo;
 
     // Theme Settings
-    var background = generalSettings.MainMenuBackgroundColour?.ToString();
-    var mainMenuColour = generalSettings.MainMenuColour?.ToString();
-    var mainMenuHover = generalSettings.MainMenuHoverColour?.ToString();
+    var background = $"#{generalSettings.MainMenuBackgroundColour?.ToString()}";
+    var mainMenuColour = $"#{generalSettings.MainMenuColour?.ToString()}";
+    var mainMenuHover = $"#{generalSettings.MainMenuHoverColour?.ToString()}";
     var mainMenuColourStyle = string.Empty;
 
     // Menu Settings
@@ -28,7 +28,7 @@
         }
 </style>
 
-<nav class="navbar navbar-expand-lg navbar-light navbar-bg " >
+<nav class="navbar navbar-expand-lg navbar-light navbar-bg ">
     <div class="container">
         <a class="navbar-brand" href="/">
             @if (logo != null)
@@ -47,9 +47,9 @@
             <ul class="navbar-nav ml-auto text-primary">
                 @foreach (var item in mainMenu)
                 {
-                <li class="nav-item">
-                    <a class="nav-link @(item.Url == pageUrl ? "active" : "")" @(item.Url == pageUrl ? $"aria-current=page" : "") href="@item.Url">@item.Name</a>
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link @(item.Url == pageUrl ? "active" : "")" @(item.Url == pageUrl ? $"aria-current=page" : "") href="@item.Url">@item.Name</a>
+                    </li>
                 }
             </ul>
         </div>

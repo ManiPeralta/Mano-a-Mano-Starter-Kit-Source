@@ -4,9 +4,9 @@
     Settings generalSettings = (Settings)Umbraco.ContentAtRoot().DescendantsOrSelfOfType("settings").FirstOrDefault();
 
     // Theme Settings
-    var footerBackground = generalSettings.FooterMenuBackgroundColour?.ToString();
-    var footerMenuColour = generalSettings.FooterMenuColour?.ToString();
-    var footerMenuHover = generalSettings.FooterMenuHoverColour?.ToString();
+    var footerBackground = $"#{generalSettings.FooterMenuBackgroundColour?.ToString()}";
+    var footerMenuColour = $"#{generalSettings.FooterMenuColour?.ToString()}";
+    var footerMenuHover = $"#{generalSettings.FooterMenuHoverColour?.ToString()}";
     var footerMenuColourStyle = string.Empty;
 
     // Menu Settings
@@ -41,7 +41,7 @@
                         foreach (var nav in footerMenu)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-white" href="@nav.Url">@nav.Name</a>
+                                <a class="nav-link" href="@nav.Url">@nav.Name</a>
                             </li>
                         }
                     }
